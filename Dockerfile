@@ -11,7 +11,7 @@ RUN R -e 'install.packages("tidyr", repos = "http://cran.us.r-project.org")'
 
 # V8 headers are required for rstan R package to compile
 RUN apt-get update \
- && apt-get install libnode-dev -y \
+ && apt-get install libnode-dev xdg-utils -y \
  && rm -rf /var/lib/apt/lists/*
 
 RUN R -e 'install.packages("rstan", repos = "http://cran.us.r-project.org")'
