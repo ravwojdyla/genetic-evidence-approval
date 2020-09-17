@@ -311,7 +311,10 @@ get_well_studied_MSH <- function(target_indication_table, association_table, MSH
 get_mesh_nassoc <- function(target_indication_table, association_table, MSH_similarity, similarity_cutoff, gene_col_name) {
   umsh <- unique(target_indication_table$MSH)
   nassoc <- integer(length(umsh))
+  # it looks like in case of Nelson's data there is some corrupted data
+  row_keys <- rownames(MSH_similarity)
   for (i in 1:length(umsh)) {
+    if (!umsh[i] %in% row_keys) next
     sim_MSH <- colnames(MSH_similarity)[MSH_similarity[umsh[i],] >= similarity_cutoff]
     association_rows <- filter(association_table, MSH %in% sim_MSH)
     nassoc[i] <- count_associations(association_rows)
